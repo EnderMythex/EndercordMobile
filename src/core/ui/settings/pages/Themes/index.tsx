@@ -32,7 +32,7 @@ export default function Themes() {
                 label: "Install a theme",
                 fetchFn: installTheme
             }}
-            items={Object.values(themes)}
+            items={Object.keys(themes).map(id => themes[id])}
             safeModeHint={{
                 message: formatString("SAFE_MODE_NOTICE_THEMES", { enabled: Boolean(settings.safeMode?.currentThemeId) }),
                 footer: settings.safeMode?.currentThemeId && <Button

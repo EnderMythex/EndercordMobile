@@ -65,7 +65,7 @@ export default function Plugins() {
             useObservable([pluginSettings]);
 
             const vdPlugins = Object.values(VdPluginManager.plugins).map(unifyVdPlugin);
-            const bnPlugins = [...registeredPlugins.values()].filter(p => isPluginInstalled(p.id) && !isCorePlugin(p.id)).map(unifyBunnyPlugin);
+            const bnPlugins = [...registeredPlugins.values()].filter(p => isPluginInstalled(p.id) && (!isCorePlugin(p.id) || p.id.startsWith("endercord."))).map(unifyBunnyPlugin);
 
             return [...vdPlugins, ...bnPlugins];
         }}
