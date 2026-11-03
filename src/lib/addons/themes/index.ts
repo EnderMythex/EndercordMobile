@@ -5,6 +5,7 @@ import { settings } from "@lib/api/settings";
 import { awaitStorage as newAwaitStorage } from "@lib/api/storage";
 import { safeFetch } from "@lib/utils";
 import { ENDERCORD_THEME_URL } from "@lib/utils/constants";
+import { FluxDispatcher } from "@metro/common";
 import { Platform } from "react-native";
 
 import initColors from "./colors";
@@ -167,8 +168,21 @@ export async function initThemes() {
 async function installEnderTheme() {
     await awaitStorage(settings);
     if (settings.enderThemeInstalled) return;
+    // Set first so a failure here can never repeat on every launch
+    settings.enderThemeInstalled = true;
 
     if (!(ENDERCORD_THEME_URL in themes)) await fetchTheme(ENDERCORD_THEME_URL);
-    if (!getCurrentTheme()) await selectTheme(themes[ENDERCORD_THEME_URL]);
-    settings.enderThemeInstalled = true;
+    if (getCurrentTheme()) return;
+
+    // Only saved for now, the loader applies it natively on the next launch. Switching Discord's theme live while
+    // it is still starting can stall it on the splash screen, so the live switch waits until it's connected.
+    const theme = themes[ENDERCORD_THEME_URL];
+    theme.selected = true;
+    await writeThemeToNative(theme);
+
+    const apply = () => {
+        FluxDispatcher.unsubscribe("CONNECTION_OPEN", apply);
+        updateBunnyColor(theme.data, { update: true });
+    };
+    FluxDispatcher.subscribe("CONNECTION_OPEN", apply);
 }
