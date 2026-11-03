@@ -59,7 +59,7 @@ jobs:
               run: |
                   # Shipped inside the APK so Discord still starts with EnderCord when the first download fails
                   cp ../dist/endercord.min.js app/src/main/assets/revenge.bundle
-                  ./gradlew :app:assembleRelease :app:testReleaseUnitTest
+                  ./gradlew :app:assembleRelease :app:testDebugUnitTest
                   cp app/build/outputs/apk/release/app-release.apk ../dist/EndercordXposed.apk
 
             - name: Publish
