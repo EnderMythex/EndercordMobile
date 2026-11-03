@@ -1,8 +1,10 @@
 import { awaitStorage, createFileBackend, createMMKVBackend, createStorage, wrapSync } from "@core/vendetta/storage";
 import { writeFile } from "@lib/api/native/fs";
 import { getStoredTheme, getThemeFilePath, isPyonLoader, isThemeSupported } from "@lib/api/native/loader";
+import { settings } from "@lib/api/settings";
 import { awaitStorage as newAwaitStorage } from "@lib/api/storage";
 import { safeFetch } from "@lib/utils";
+import { ENDERCORD_THEME_URL } from "@lib/utils/constants";
 import { Platform } from "react-native";
 
 import initColors from "./colors";
@@ -153,8 +155,20 @@ export async function initThemes() {
         const currentTheme = getThemeFromLoader();
         initColors(currentTheme?.data ?? null);
 
-        updateThemes().catch(e => console.error("Failed to update themes", e));
+        updateThemes()
+            .then(installEnderTheme)
+            .catch(e => console.error("Failed to update themes", e));
     } catch (e) {
         console.error("Failed to initialize themes", e);
     }
+}
+
+// Installs and turns on the EnderCord theme the first time EnderCord starts. Users who remove it or pick another one keep their choice.
+async function installEnderTheme() {
+    await awaitStorage(settings);
+    if (settings.enderThemeInstalled) return;
+
+    if (!(ENDERCORD_THEME_URL in themes)) await fetchTheme(ENDERCORD_THEME_URL);
+    if (!getCurrentTheme()) await selectTheme(themes[ENDERCORD_THEME_URL]);
+    settings.enderThemeInstalled = true;
 }

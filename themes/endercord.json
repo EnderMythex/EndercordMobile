@@ -1,0 +1,172 @@
+{
+    "name": "EnderCord",
+    "description": "EnderCord's black theme, with the ring glowing behind your messages.",
+    "authors": [
+        {
+            "name": "EnderMythex",
+            "id": "0"
+        }
+    ],
+    "spec": 2,
+    "semanticColors": {
+        "BACKGROUND_BASE_LOWEST": [
+            "#060608",
+            "#060608"
+        ],
+        "BACKGROUND_BASE_LOWER": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "BACKGROUND_BASE_LOW": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "BACKGROUND_SURFACE_HIGH": [
+            "#16161A",
+            "#16161A"
+        ],
+        "BACKGROUND_SURFACE_HIGHER": [
+            "#16161A",
+            "#16161A"
+        ],
+        "BACKGROUND_SURFACE_HIGHEST": [
+            "#121215",
+            "#121215"
+        ],
+        "BG_BASE_PRIMARY": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "BG_BASE_SECONDARY": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "BG_BASE_TERTIARY": [
+            "#060608",
+            "#060608"
+        ],
+        "BG_SURFACE_RAISED": [
+            "#16161A",
+            "#16161A"
+        ],
+        "BG_SURFACE_OVERLAY": [
+            "#121215",
+            "#121215"
+        ],
+        "BG_SURFACE_OVERLAY_TMP": [
+            "#121215",
+            "#121215"
+        ],
+        "CHAT_BACKGROUND_DEFAULT": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "INPUT_BACKGROUND_DEFAULT": [
+            "#16161A",
+            "#16161A"
+        ],
+        "APP_FRAME_BACKGROUND": [
+            "#060608",
+            "#060608"
+        ],
+        "MOBILE_ANDROID_BOTTOM_TAB_BACKGROUND": [
+            "#060608",
+            "#060608"
+        ],
+        "BACKGROUND_PRIMARY": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "BACKGROUND_SECONDARY": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "BACKGROUND_SECONDARY_ALT": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "BACKGROUND_TERTIARY": [
+            "#060608",
+            "#060608"
+        ],
+        "BACKGROUND_FLOATING": [
+            "#121215",
+            "#121215"
+        ],
+        "BACKGROUND_NESTED_FLOATING": [
+            "#121215",
+            "#121215"
+        ],
+        "BACKGROUND_MOBILE_PRIMARY": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "BACKGROUND_MOBILE_SECONDARY": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "CHAT_BACKGROUND": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "CHAT_INPUT_CONTAINER_BACKGROUND": [
+            "#0E0E11",
+            "#0E0E11"
+        ],
+        "CHANNELTEXTAREA_BACKGROUND": [
+            "#16161A",
+            "#16161A"
+        ],
+        "HOME_BACKGROUND": [
+            "#060608",
+            "#060608"
+        ],
+        "MODAL_BACKGROUND": [
+            "#121215",
+            "#121215"
+        ],
+        "MODAL_FOOTER_BACKGROUND": [
+            "#121215",
+            "#121215"
+        ],
+        "CARD_PRIMARY_BG": [
+            "#16161A",
+            "#16161A"
+        ],
+        "CARD_SECONDARY_BG": [
+            "#0A0A0C",
+            "#0A0A0C"
+        ],
+        "REDESIGN_BUTTON_SECONDARY_BACKGROUND": [
+            "#16161A",
+            "#16161A"
+        ],
+        "BACKGROUND_MODIFIER_ACCENT": [
+            "#FFFFFF14",
+            "#FFFFFF14"
+        ],
+        "BORDER_SUBTLE": [
+            "#FFFFFF0F",
+            "#FFFFFF0F"
+        ],
+        "BORDER_FAINT": [
+            "#FFFFFF0F",
+            "#FFFFFF0F"
+        ]
+    },
+    "rawColors": {
+        "PRIMARY_800": "#060608",
+        "PRIMARY_760": "#0A0A0C",
+        "PRIMARY_700": "#0E0E11",
+        "PRIMARY_660": "#16161A",
+        "PRIMARY_645": "#16161A",
+        "PRIMARY_630": "#121215",
+        "PRIMARY_600": "#121215",
+        "BLACK_500": "#000000"
+    },
+    "background": {
+        "url": "https://raw.githubusercontent.com/EnderMythex/EndercordMobile/main/themes/endercord-background.png",
+        "blur": 0,
+        "alpha": 0.35
+    }
+}

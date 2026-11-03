@@ -11,6 +11,7 @@ export interface Settings {
         currentThemeId?: string;
     };
     enableEvalCommand?: boolean;
+    enderThemeInstalled?: boolean;
 }
 
 export interface LoaderConfig {

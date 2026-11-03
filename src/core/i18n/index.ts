@@ -47,7 +47,7 @@ export function initFetchI18nStrings() {
 
             fetch(`https://raw.githubusercontent.com/pyoncord/i18n/main/resources/${resolvedLocale}/bunny.json`)
                 .then(r => r.json())
-                .then(strings => _loadedStrings[resolvedLocale] = strings)
+                .then(strings => _loadedStrings[resolvedLocale] = JSON.parse(JSON.stringify(strings).replace(/\b(Revenge|Bunny|Pyoncord)\b/g, "EnderCord")))
                 .then(() => resolvedLocale === _lastSetLocale && (_currentLocale = resolvedLocale))
                 .catch(e => console.error(`An error occured while fetching strings for ${resolvedLocale}: ${e}`));
         } else {

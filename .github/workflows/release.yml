@@ -1,37 +1,70 @@
 name: Release
+
 on:
     push:
-        branches: [main, dev]
+        branches: [main]
+        paths-ignore: ["**.md", "docs/**", "themes/**", "assets/**"]
+    workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}
+    cancel-in-progress: false
+
+permissions:
+    contents: write
 
 jobs:
     release:
-        name: Release
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-
+        timeout-minutes: 30
+        env:
+            VERSION_NAME: 1.0.${{ github.run_number }}
+            VERSION_CODE: ${{ github.run_number }}
         steps:
-          - name: Checkout
-            uses: actions/checkout@v4
+            - uses: actions/checkout@v4
 
-          - name: Restore Bun cache
-            uses: actions/cache@v4
-            with:
-              path: ~/.bun/install/cache
-              key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-              restore-keys: |
-                ${{ runner.os }}-bun-
-              
-          - name: Setup Bun
-            uses: oven-sh/setup-bun@v2
-            with:
-              bun-version: latest
+            - uses: oven-sh/setup-bun@v2
 
-          - name: Install dependencies
-            run: bun install --frozen-lockfile
+            - name: Build the bundle
+              run: |
+                  bun install --frozen-lockfile
+                  bun run build --release-branch main --build-minify
 
-          - name: Release
-            run: bunx semantic-release
-            env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                RELEASE_BRANCH: ${{ github.ref_name }}
+            - uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: 25
+
+            - uses: gradle/actions/setup-gradle@v4
+
+            - name: Decode keystore
+              id: keystore
+              env:
+                  KEYSTORE: ${{ secrets.KEYSTORE }}
+              run: |
+                  if [ -n "$KEYSTORE" ]; then
+                    echo "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/signing-key.jks"
+                    echo "file=$RUNNER_TEMP/signing-key.jks" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "::notice::No KEYSTORE secret, the loader is signed with a debug key."
+                  fi
+
+            - name: Build the loader
+              working-directory: xposed
+              env:
+                  KEYSTORE_FILE: ${{ steps.keystore.outputs.file }}
+                  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+                  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+                  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+              run: |
+                  # Shipped inside the APK so Discord still starts with EnderCord when the first download fails
+                  cp ../dist/endercord.min.js app/src/main/assets/revenge.bundle
+                  ./gradlew :app:assembleRelease :app:testReleaseUnitTest
+                  cp app/build/outputs/apk/release/app-release.apk ../dist/EndercordXposed.apk
+
+            - name: Publish
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  gh release create "v$VERSION_NAME" dist/endercord.js dist/endercord.min.js dist/EndercordXposed.apk \
+                    --target "$GITHUB_SHA" --title "EnderCord Mobile $VERSION_NAME" --generate-notes --latest

@@ -18,9 +18,9 @@ async function initializeRevenge() {
 
         console.log(stack ?? e?.toString?.() ?? e);
         alert([
-            "Failed to load Revenge!\n",
+            "Failed to load EnderCord!\n",
             `Build Number: ${ClientInfoManager.getConstants().Build}`,
-            `Revenge: ${version}`,
+            `EnderCord: ${version}`,
             stack || e?.toString?.(),
         ].join("\n"));
     }

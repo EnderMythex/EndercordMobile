@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@revenge-mod/revenge",
+      "name": "endercord-mobile",
       "dependencies": {
         "@gullerya/object-observer": "^6.1.4",
         "@revenge-mod/devtools-client": "^1.4.0",

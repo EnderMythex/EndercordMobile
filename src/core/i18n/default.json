@@ -6,8 +6,8 @@
     "ARE_YOU_SURE_TO_DELETE_THEME": "Are you sure you wish to delete {name}?",
     "ASSET_BROWSER": "Asset Browser",
     "BRAND": "Brand",
-    "BUNNY_URL": "Revenge URL",
-    "BUNNY": "Revenge",
+    "BUNNY_URL": "EnderCord URL",
+    "BUNNY": "EnderCord",
     "BYTECODE": "Bytecode",
     "CANCEL": "Cancel",
     "CLEAR_BUNDLE_DESC": "Clear the cached bundle. This will force a re-download of the bundle next app launch.",
@@ -66,7 +66,7 @@
     "INSTALL": "Install",
     "LABEL_EXTRACT_FONTS_FROM_THEME": "Extract font from theme",
     "LINKS": "Links",
-    "LOAD_FROM_CUSTOM_URL_DEC": "Load Revenge from a custom endpoint",
+    "LOAD_FROM_CUSTOM_URL_DEC": "Load EnderCord from a custom endpoint",
     "LOAD_FROM_CUSTOM_URL": "Load from custom URL",
     "LOAD_REACT_DEVTOOLS": "Load React DevTools",
     "LOADER": "Loader",
@@ -119,7 +119,7 @@
     "UH_OH": "Uh Oh",
     "UNINSTALL_TITLE": "Uninstall {title}",
     "UNINSTALL": "Uninstall",
-    "URL_PLACEHOLDER": "https://github.com/revenge-mod",
+    "URL_PLACEHOLDER": "https://github.com/EnderMythex",
     "VERSION": "Version",
     "VERSIONS": "Versions"
 }

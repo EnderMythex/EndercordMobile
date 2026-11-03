@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "RevengeXposed"
+rootProject.name = "EndercordXposed"
 include(":app")
 include(":api")

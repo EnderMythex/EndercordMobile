@@ -1,75 +1,78 @@
 <p align="center">
-  <picture>
-    <source
-      width="512px"
-      media="(prefers-color-scheme: dark)"
-      srcset="assets/wordmark/wordmark+slogan-dark.svg"
-    >
-    <img
-      width="512px"
-      src="assets/wordmark/wordmark+slogan-light.svg"
-    >
-  </picture>
-  <br>
-  <a href="https://revenge-mod.github.io/">
-       <picture>
-           <source height="32px" media="(prefers-color-scheme: dark)" srcset="assets/logo/logo-dark.svg" />
-           <img height="32px" src="assets/logo/logo-light.svg" />
-       </picture>
-   </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="https://discord.com/invite/ddcQf3s2Uq">
-       <picture>
-           <source height="32px" media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/13122796/178032563-d4e084b7-244e-4358-af50-26bde6dd4996.png" />
-           <img height="32px" src="https://user-images.githubusercontent.com/13122796/178032563-d4e084b7-244e-4358-af50-26bde6dd4996.png" />
-       </picture>
-   </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="https://github.com/revenge-mod">
-       <picture>
-           <source height="32px" media="(prefers-color-scheme: dark)" srcset="https://i.ibb.co/dMMmCrW/Git-Hub-Mark.png" />
-           <img height="32px" src="https://i.ibb.co/9wV3HGF/Git-Hub-Mark-Light.png" />
-       </picture>
-   </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-   </a>
+  <img src=".github/assets/banner.png" alt="EnderCord Mobile" width="100%">
 </p>
 
-# 👊 Revenge
+<p align="center">
+  <a href="https://github.com/EnderMythex/EndercordMobile/releases/latest"><img src="https://img.shields.io/github/v/release/EnderMythex/EndercordMobile?style=flat-square&label=release&labelColor=000&color=1c1c1e" alt="Latest release"></a>
+  <a href="https://github.com/EnderMythex/EndercordManager/releases/latest"><img src="https://img.shields.io/github/v/release/EnderMythex/EndercordManager?style=flat-square&label=manager&labelColor=000&color=1c1c1e" alt="Manager release"></a>
+  <img src="https://img.shields.io/badge/platform-Android-1c1c1e?style=flat-square&labelColor=000" alt="Android">
+</p>
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/revenge-mod/revenge-bundle/release.yml)
-[![3-Clause BSD License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+<p align="center">
+  <a href="https://github.com/EnderMythex/Endercord"><b>EnderCord</b></a> for Discord Android: the black theme with the ring,<br>
+  plugins, themes and fonts, on the real and up to date Discord app.
+</p>
 
-A client modification for Discord Android, continuation of [Bunny](https://github.com/pyoncord/Bunny).
+<br>
 
-## 💪 Features
+## Install
 
-- **🔌 Plugins**: Extend Discord with custom features
-- **🎨 Themes & Fonts**: Customize Discord's appearance to your liking
-- **🧪 Experiments**: Try out Discord's new features before they're rolled out
+Download the [**EnderCord Manager**](https://github.com/EnderMythex/EndercordManager/releases/latest), open it and tap **Install**. It downloads Discord, adds EnderCord to it and installs it next to the official app. No root needed.
 
-## ⬇️ Download
+With root and an Xposed framework (LSPosed, Vector), you can instead install [`EndercordXposed.apk`](https://github.com/EnderMythex/EndercordMobile/releases/latest/download/EndercordXposed.apk) as a module, scoped to Discord.
 
-This repository releases JavaScript bundles for loaders to execute. These are the official Revenge loaders:
+EnderCord then keeps itself up to date: each time Discord starts, it fetches the latest version.
 
-### Android
+<br>
 
-- **🩹 Root with Xposed**: [RevengeXposed](https://github.com/revenge-mod/revenge-xposed/releases/latest)
-- **📵 Non-root**: [Revenge Manager](https://github.com/revenge-mod/revenge-manager/releases/latest)
+## Features
 
-## 📚 Everything else
+- **EnderCord theme.** Turned on at first launch: deep black panels with the EnderCord ring glowing behind your messages. You can switch it off or pick another theme in **Settings › EnderCord › Themes**.
+- **Plugins.** Install plugins from a link in **Settings › EnderCord › Plugins**. Vendetta, Bunny and Revenge plugins work.
+- **Themes and fonts.** Any Vendetta or Revenge theme, and custom fonts.
+- **Safe mode.** If a plugin breaks Discord, start in safe mode and turn it off.
 
-### 📙 Contributing
+Plugins made for EnderCord on PC don't work here: the Android app is built differently, so mobile plugins are written separately.
 
-Thank you for considering contributing to Revenge.
-You can find the contribution guidelines [here](CONTRIBUTING.md).
+<br>
 
-### 🛠️ Building
+## How it fits together
 
-To build Revenge bundle, you can follow the [documentation](/docs).
+| Part | Where | What it does |
+| --- | --- | --- |
+| Bundle | `src/` | The JavaScript that runs inside Discord: settings pages, plugins, themes, fonts. Released as `endercord.min.js`. |
+| Loader | `xposed/` | Loads the bundle when Discord starts, downloads its updates and gives it access to files and native theming. Released as `EndercordXposed.apk`. |
+| Manager | [EndercordManager](https://github.com/EnderMythex/EndercordManager) | Patches Discord with the loader on phones without root, and installs it. |
+| Theme | `themes/` | The EnderCord theme and its background. |
 
-### 📃 Documentation
+Every push to `main` builds the bundle and the loader on GitHub Actions and publishes them as a new release.
 
-You can find the documentation of Revenge bundle [here](/docs).
+<br>
 
-## 📜 Licence
+## Build
 
-Revenge bundle is licensed under the 3-Clause BSD license. Please see the [license file](LICENSE) for more information.
+You need [Bun](https://bun.sh), and for the loader JDK 25 and the Android SDK.
+
+```sh
+bun install
+bun run build --build-minify   # dist/endercord.js and dist/endercord.min.js
+```
+
+To try a local build on your phone, run `bun run serve`, then in Discord enable **Settings › EnderCord › Developer**, turn on **Load from custom URL** and point it at `http://<your computer's IP>:4040/endercord.js`.
+
+```sh
+cd xposed
+./gradlew :app:assembleRelease
+```
+
+<br>
+
+## Credits
+
+EnderCord Mobile is a fork of [Revenge](https://github.com/revenge-mod/revenge-bundle) and [RevengeXposed](https://github.com/revenge-mod/revenge-xposed), which continue [Bunny](https://github.com/pyoncord/Bunny) and [Vendetta](https://github.com/vendetta-mod). Thanks to all of their contributors.
+
+The bundle is under the [BSD 3-Clause license](LICENSE), and the loader under the [GPL 3.0](xposed/LICENSE).
+
+## Disclaimer
+
+Discord is a trademark of Discord Inc. EnderCord is not affiliated with or endorsed by Discord Inc. or Revenge. Client modifications are against Discord's Terms of Service; use it at your own risk.

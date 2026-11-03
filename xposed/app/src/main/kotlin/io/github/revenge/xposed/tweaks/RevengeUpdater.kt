@@ -38,7 +38,7 @@ object RevengeUpdater {
     private const val ETAG_PATH = "etag.txt"
     private const val CONFIG_PATH = "loader.json"
     private const val DEFAULT_BUNDLE_URL =
-        "https://github.com/revenge-mod/revenge-bundle/releases/latest/download/revenge.min.js"
+        "https://github.com/EnderMythex/EndercordMobile/releases/latest/download/endercord.min.js"
 
     private val log = logger("revengeUpdater")
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)

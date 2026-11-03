@@ -1,11 +1,11 @@
 {
-    "name": "@revenge-mod/revenge",
+    "name": "endercord-mobile",
     "exports": {
         "types": "./dist/types/index.d.ts"
     },
     "author": {
-        "name": "Revenge Team",
-        "url": "https://github.com/revenge-mod"
+        "name": "EnderMythex",
+        "url": "https://github.com/EnderMythex"
     },
     "scripts": {
         "build": "node scripts/build.mjs",
