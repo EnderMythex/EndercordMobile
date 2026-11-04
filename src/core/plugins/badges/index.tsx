@@ -29,11 +29,15 @@ export default defineCorePlugin({
         const propHolder = {} as Record<string, any>;
         const badgeCache = {} as Record<string, BunnyBadge[]>;
 
-        onJsxCreate("RenderedBadge", (_, ret) => {
-            if (ret.props.id.match(/bunny-\d+-\d+/)) {
-                Object.assign(ret.props, propHolder[ret.props.id]);
-            }
-        });
+        // Discord renamed the badge component over time, so all the names it has used are covered
+        for (const name of ["RenderedBadge", "ProfileBadge", "RenderBadge"]) {
+            onJsxCreate(name, (_, ret) => {
+                if (ret.props.id?.match(/bunny-\d+-\d+/)) {
+                    Object.assign(ret.props, propHolder[ret.props.id]);
+                }
+                return ret;
+            });
+        }
 
         after("default", useBadgesModule, ([user], r) => {
             const [badges, setBadges] = useState<BunnyBadge[]>(user ? badgeCache[user.userId] ??= [] : []);
@@ -50,7 +54,7 @@ export default defineCorePlugin({
                 badges.forEach((badges, i) => {
                     propHolder[`bunny-${user.userId}-${i}`] = {
                         source: { uri: badges.url },
-                        id: `bunny-${i}`,
+                        id: `bunny-${user.userId}-${i}`,
                         label: badges.label
                     };
 
