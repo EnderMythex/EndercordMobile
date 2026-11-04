@@ -12,3 +12,4 @@ export const VD_PLUGINS_CHANNEL_ID = "1091880384561684561";
 export const VD_THEMES_CHANNEL_ID = "1091880434939482202";
 
 export const ENDERCORD_THEME_URL = "https://raw.githubusercontent.com/EnderMythex/EndercordMobile/main/themes/endercord.json";
+export const ENDERCORD_BADGES_URL = "https://raw.githubusercontent.com/EnderMythex/EndercordMobile/main/badges/badges.json";

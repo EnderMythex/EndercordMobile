@@ -1,5 +1,6 @@
 import { after } from "@lib/api/patcher";
 import { onJsxCreate } from "@lib/api/react/jsx";
+import { ENDERCORD_BADGES_URL } from "@lib/utils/constants";
 import { findByName } from "@metro";
 import { useEffect, useState } from "react";
 
@@ -11,6 +12,10 @@ interface BunnyBadge {
 }
 
 const useBadgesModule = findByName("useBadges", false);
+
+// EnderCord's own badges, one list per user ID, fetched once per launch
+let badgesRequest: Promise<Record<string, BunnyBadge[]>> | undefined;
+const getBadges = () => badgesRequest ??= fetch(ENDERCORD_BADGES_URL, { cache: "no-store" }).then(r => r.json());
 
 export default defineCorePlugin({
     manifest: {
@@ -35,9 +40,9 @@ export default defineCorePlugin({
 
             useEffect(() => {
                 if (user) {
-                    fetch(`https://raw.githubusercontent.com/pyoncord/badges/refs/heads/main/${user.userId}.json`)
-                        .then(r => r.json())
-                        .then(badges => setBadges(badgeCache[user.userId] = badges));
+                    getBadges()
+                        .then(all => setBadges(badgeCache[user.userId] = all[user.userId] ?? []))
+                        .catch(() => { });
                 }
             }, [user]);
 

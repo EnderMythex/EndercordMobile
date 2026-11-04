@@ -6,7 +6,11 @@ import { logger } from "@lib/utils/logger";
 // Community plugins EnderCord installs once. They keep updating from their authors, and stay removed if the user removes them.
 const DEFAULT_PLUGINS = [
     "https://martinz64.github.io/vendetta-plugins/PlatformIndicators/",
-    "https://meqativ.github.io/dumsane/NoDelete/"
+    "https://meqativ.github.io/dumsane/NoDelete/",
+    "https://lioncat6.github.io/revenge-plugins/hidden-channels/",
+    "https://tralwdwd.github.io/plugins/JumpToTop/",
+    "https://angelix1.github.io/MP/angel/radialstatus/",
+    "https://plugins.obamabot.me/vendetta-plugins/globalBadges/"
 ];
 
 export async function installDefaultPlugins() {
