@@ -12,6 +12,7 @@ export interface Settings {
     };
     enableEvalCommand?: boolean;
     enderThemeInstalled?: boolean;
+    enderDefaultPlugins?: string[];
 }
 
 export interface LoaderConfig {

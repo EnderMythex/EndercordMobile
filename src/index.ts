@@ -1,4 +1,5 @@
 import patchErrorBoundary from "@core/debug/patches/patchErrorBoundary";
+import { installDefaultPlugins } from "@core/endercord/defaultPlugins";
 import initFixes from "@core/fixes";
 import { initFetchI18nStrings } from "@core/i18n";
 import initSettings from "@core/ui/settings";
@@ -46,6 +47,7 @@ export default async () => {
     // Once done, load Vendetta plugins
     VdPluginManager.initPlugins()
         .then(u => lib.unload.push(u))
+        .then(installDefaultPlugins)
         .catch(() => alert("Failed to initialize Vendetta plugins"));
 
     // And then, load Bunny plugins

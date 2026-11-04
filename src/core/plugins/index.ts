@@ -9,8 +9,6 @@ interface CorePlugin {
 export const getCorePlugins = (): Record<string, CorePlugin> => ({
     "bunny.quickinstall": require("./quickinstall"),
     "bunny.badges": require("./badges"),
-    "endercord.message-logger": require("./messageLogger"),
-    "endercord.platform-indicators": require("./platformIndicators"),
     "endercord.device-spoofer": { ...require("./deviceSpoofer"), preenabled: false }
 });
 
