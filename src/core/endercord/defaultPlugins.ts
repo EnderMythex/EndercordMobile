@@ -7,14 +7,23 @@ import { logger } from "@lib/utils/logger";
 const DEFAULT_PLUGINS = [
     "https://martinz64.github.io/vendetta-plugins/PlatformIndicators/",
     "https://meqativ.github.io/dumsane/NoDelete/",
-    "https://lioncat6.github.io/revenge-plugins/hidden-channels/",
     "https://tralwdwd.github.io/plugins/JumpToTop/",
-    "https://angelix1.github.io/MP/angel/radialstatus/",
     "https://plugins.obamabot.me/vendetta-plugins/globalBadges/"
+];
+
+// Earlier defaults that broke on current Discord. Hidden Channels is now built in, with a fix.
+const REMOVED_PLUGINS = [
+    "https://lioncat6.github.io/revenge-plugins/hidden-channels/",
+    "https://angelix1.github.io/MP/angel/radialstatus/"
 ];
 
 export async function installDefaultPlugins() {
     await awaitStorage(settings);
+
+    for (const url of REMOVED_PLUGINS) {
+        if (!settings.enderDefaultPlugins?.includes(url) || !(url in VdPluginManager.plugins)) continue;
+        await VdPluginManager.removePlugin(url).catch(e => logger.error(`Failed to remove ${url}`, e));
+    }
 
     for (const url of DEFAULT_PLUGINS) {
         const done = settings.enderDefaultPlugins ?? [];
