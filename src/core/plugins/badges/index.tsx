@@ -54,7 +54,7 @@ export default defineCorePlugin({
                         label: badges.label
                     };
 
-                    r.push({
+                    r.splice(i, 0, {
                         id: `bunny-${user.userId}-${i}`,
                         description: badges.label,
                         icon: "_",
