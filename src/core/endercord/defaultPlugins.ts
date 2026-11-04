@@ -8,7 +8,8 @@ const DEFAULT_PLUGINS = [
     "https://martinz64.github.io/vendetta-plugins/PlatformIndicators/",
     "https://meqativ.github.io/dumsane/NoDelete/",
     "https://tralwdwd.github.io/plugins/JumpToTop/",
-    "https://plugins.obamabot.me/vendetta-plugins/globalBadges/"
+    "https://plugins.obamabot.me/vendetta-plugins/globalBadges/",
+    "https://lvwmwm.github.io/vendettian-plugins/permissionviewer/"
 ];
 
 // Earlier defaults that broke on current Discord. Hidden Channels is now built in, with a fix.
