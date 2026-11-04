@@ -10,6 +10,7 @@ export const getCorePlugins = (): Record<string, CorePlugin> => ({
     "bunny.quickinstall": require("./quickinstall"),
     "bunny.badges": require("./badges"),
     "endercord.hidden-channels": require("./hiddenChannels"),
+    "endercord.edit-history": require("./editHistory"),
     "endercord.device-spoofer": { ...require("./deviceSpoofer"), preenabled: false }
 });
 

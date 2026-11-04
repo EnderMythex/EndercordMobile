@@ -1,5 +1,6 @@
 import patchErrorBoundary from "@core/debug/patches/patchErrorBoundary";
 import { installDefaultPlugins } from "@core/endercord/defaultPlugins";
+import { hideSplashWhenReady } from "@core/endercord/splash";
 import initFixes from "@core/fixes";
 import { initFetchI18nStrings } from "@core/i18n";
 import initSettings from "@core/ui/settings";
@@ -57,5 +58,6 @@ export default async () => {
     updateFonts();
 
     // We good :)
+    hideSplashWhenReady();
     logger.log("EnderCord is ready!");
 };

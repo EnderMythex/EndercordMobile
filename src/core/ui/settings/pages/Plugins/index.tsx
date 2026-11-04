@@ -18,6 +18,7 @@ import { ComponentProps } from "react";
 import { View } from "react-native";
 
 import { UnifiedPluginModel } from "./models";
+import RecommendedPlugins from "./Recommended";
 import unifyBunnyPlugin from "./models/bunny";
 import unifyVdPlugin from "./models/vendetta";
 
@@ -109,8 +110,9 @@ export default function Plugins() {
                 </Card>
             </View>;
         }}
-        ListFooterComponent={() => __DEV__ && (
-            <View style={{ alignItems: "center", justifyContent: "center", paddingTop: 16, gap: 12 }}><Button
+        ListFooterComponent={() => <>
+            <RecommendedPlugins />
+            {__DEV__ && <View style={{ alignItems: "center", justifyContent: "center", paddingTop: 16, gap: 12 }}><Button
                 size="lg"
                 text="Browse Plugins"
                 icon={findAssetId("CompassIcon")}
@@ -121,8 +123,8 @@ export default function Plugins() {
                     });
                 }}
             />
-            </View>
-        )}
+            </View>}
+        </>}
         installAction={{
             label: "Install a plugin",
             fetchFn: async (url: string) => {
