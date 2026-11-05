@@ -82,14 +82,14 @@ export function createProxy(target: any = {}): { proxy: any; emitter: Emitter; }
 }
 
 export function useProxy<T>(storage: T): T {
+    // Exactly two hooks, like useObservable: list items switch between the two when their component is recycled
     const [, forceUpdate] = React.useReducer(n => ~n, 0);
-    const [loaded, setLoaded] = React.useState(false);
+    // A storage that is still loading has no emitter yet: render with its defaults, then subscribe once it loads
+    const emitter = (storage as any)?.[emitterSymbol] as Emitter | undefined;
 
     React.useEffect(() => {
-        // A storage that is still loading has no emitter yet: render with its defaults, then subscribe once it loads
-        const emitter = (storage as any)?.[emitterSymbol] as Emitter | undefined;
         if (!emitter) {
-            (storage as any)?.[syncAwaitSymbol]?.(() => setLoaded(true));
+            (storage as any)?.[syncAwaitSymbol]?.(forceUpdate);
             return;
         }
 
@@ -105,7 +105,7 @@ export function useProxy<T>(storage: T): T {
             emitter.off("SET", listener);
             emitter.off("DEL", listener);
         };
-    }, [loaded]);
+    }, [emitter]);
 
     return storage;
 }
