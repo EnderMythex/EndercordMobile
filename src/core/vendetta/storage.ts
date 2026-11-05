@@ -82,12 +82,17 @@ export function createProxy(target: any = {}): { proxy: any; emitter: Emitter; }
 }
 
 export function useProxy<T>(storage: T): T {
-    const emitter = (storage as any)?.[emitterSymbol] as Emitter;
-    if (!emitter) throw new Error("storage?.[emitterSymbol] is undefined");
-
     const [, forceUpdate] = React.useReducer(n => ~n, 0);
+    const [loaded, setLoaded] = React.useState(false);
 
     React.useEffect(() => {
+        // A storage that is still loading has no emitter yet: render with its defaults, then subscribe once it loads
+        const emitter = (storage as any)?.[emitterSymbol] as Emitter | undefined;
+        if (!emitter) {
+            (storage as any)?.[syncAwaitSymbol]?.(() => setLoaded(true));
+            return;
+        }
+
         const listener: EmitterListener = (event: EmitterEvent, data: EmitterListenerData) => {
             if (event === "DEL" && data.value === storage) return;
             forceUpdate();
@@ -100,7 +105,7 @@ export function useProxy<T>(storage: T): T {
             emitter.off("SET", listener);
             emitter.off("DEL", listener);
         };
-    }, []);
+    }, [loaded]);
 
     return storage;
 }
@@ -169,7 +174,7 @@ const getMMKVPath = (name: string): string => {
 };
 
 export const purgeStorage = async (store: string) => {
-    if (await NativeCacheModule.getItem(store)) {
+    if (await NativeCacheModule?.getItem(store)) {
         NativeCacheModule.removeItem(store);
     }
 
@@ -187,7 +192,16 @@ export const createMMKVBackend = (store: string, defaultData = {}) => {
         const path = `${NativeFileModule.getConstants().DocumentsDirPath}/${mmkvPath}`;
         if (await NativeFileModule.fileExists(path)) return;
 
-        let oldData = await NativeCacheModule.getItem(store) ?? defaultStr;
+        // Newer Discord builds no longer ship the MMKV module, so there is nothing to migrate from
+        const readOld = async () => {
+            try {
+                return await NativeCacheModule?.getItem(store) ?? null;
+            } catch {
+                return null;
+            }
+        };
+
+        let oldData = await readOld() ?? defaultStr;
 
         // From the testing on Android, it seems to return this if the data is too large
         if (oldData === "!!LARGE_VALUE!!") {
@@ -208,7 +222,7 @@ export const createMMKVBackend = (store: string, defaultData = {}) => {
         }
 
         await NativeFileModule.writeFile("documents", filePathFixer(mmkvPath), oldData, "utf8");
-        if (await NativeCacheModule.getItem(store) !== null) {
+        if (await readOld() !== null) {
             NativeCacheModule.removeItem(store);
             console.log(`Successfully migrated ${store} store from MMKV storage to fs`);
         }
