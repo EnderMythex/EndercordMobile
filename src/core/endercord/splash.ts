@@ -12,9 +12,9 @@ export function hideSplashWhenReady() {
         EVENTS.forEach(e => FluxDispatcher.unsubscribe(e, hide));
         // Calls the loader's bridge, which listens on this native method
         const reader = globalThis.__turboModuleProxy?.("FileReaderModule") ?? window.nativeModuleProxy.FileReaderModule;
-        setTimeout(() => reader?.readAsDataURL({ revenge: { method: "endercord.splash.hide", args: [] } })?.catch?.(() => { }), 300);
+        setTimeout(() => reader?.readAsDataURL({ revenge: { method: "endercord.splash.hide", args: [] } })?.catch?.(() => { }), 150);
     };
 
     EVENTS.forEach(e => FluxDispatcher.subscribe(e, hide));
-    timer = setTimeout(hide, 6000);
+    timer = setTimeout(hide, 4000);
 }

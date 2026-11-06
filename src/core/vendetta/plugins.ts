@@ -170,10 +170,9 @@ export const VdPluginManager = {
         const allIds = Object.keys(plugins);
 
         if (!settings.safeMode?.enabled) {
-            // Loop over any plugin that is enabled, update it if allowed, then start it.
-            await Promise.allSettled(allIds.filter(pl => plugins[pl].enabled).map(async pl => (plugins[pl].update && await this.fetchPlugin(pl).catch((e: Error) => logger.error(e.message)), await this.startPlugin(pl))));
-            // Wait for the above to finish, then update all disabled plugins that are allowed to.
-            allIds.filter(pl => !plugins[pl].enabled && plugins[pl].update).forEach(pl => this.fetchPlugin(pl));
+            // Start enabled plugins from their saved code right away, then fetch updates in the background for the next launch
+            await Promise.allSettled(allIds.filter(pl => plugins[pl].enabled).map(pl => this.startPlugin(pl)));
+            allIds.filter(pl => plugins[pl].update).forEach(pl => this.fetchPlugin(pl).catch((e: Error) => logger.error(e.message)));
         }
 
         return () => this.stopAllPlugins();

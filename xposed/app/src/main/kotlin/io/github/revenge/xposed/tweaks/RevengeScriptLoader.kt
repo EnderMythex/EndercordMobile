@@ -34,7 +34,9 @@ private fun runRevengeScripts(scope: InjectorScope, preloadsDir: File, mainScrip
     val log = scope.tweakLog
     log.i("Running Revenge custom scripts...")
 
-    runBlocking {
+    // With a bundle already downloaded, start on it right away: the update check keeps running in the background and
+    // its result is used on the next launch. Only the very first launch waits for the download.
+    if (mainScript.length() == 0L) runBlocking {
         try {
             withTimeout(RevengeUpdater.TIMEOUT) { RevengeUpdater.downloadReady.await() }
         } catch (e: Throwable) {
@@ -48,7 +50,7 @@ private fun runRevengeScripts(scope: InjectorScope, preloadsDir: File, mainScrip
             scope.runFile(f.absolutePath)
         }
 
-        if (mainScript.exists()) {
+        if (mainScript.length() > 0L) {
             log.i("Loading downloaded bundle: ${mainScript.absolutePath}")
             scope.runFile(mainScript.absolutePath)
         } else {

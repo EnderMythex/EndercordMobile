@@ -380,7 +380,8 @@ export async function updatePlugins() {
         corePluginInstances.set(id, instance);
     }
 
-    await updateAllRepository();
+    // Repositories refresh in the background, so Discord doesn't wait on the network to start
+    updateAllRepository().catch(e => console.error("Failed to update plugin repositories", e));
 }
 
 /**
