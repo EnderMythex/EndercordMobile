@@ -11,6 +11,7 @@ export const getCorePlugins = (): Record<string, CorePlugin> => ({
     "bunny.badges": require("./badges"),
     "endercord.hidden-channels": require("./hiddenChannels"),
     "endercord.edit-history": require("./editHistory"),
+    "endercord.hide-gift-button": require("./hideGiftButton"),
     "endercord.device-spoofer": { ...require("./deviceSpoofer"), preenabled: false }
 });
 

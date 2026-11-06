@@ -1,3 +1,4 @@
+import Banner from "@assets/icons/banner.png";
 import { isSafeMode, toggleSafeMode } from "@core/debug/safeMode";
 import { Strings } from "@core/i18n";
 import { PyoncordIcon } from "@core/ui/settings";
@@ -11,7 +12,7 @@ import { openAlert } from "@lib/ui/alerts";
 import { GITHUB } from "@lib/utils/constants";
 import { NavigationNative } from "@metro/common";
 import { AlertActionButton, AlertActions, AlertModal, Stack, TableRow, TableRowGroup, TableSwitchRow } from "@metro/common/components";
-import { Linking, ScrollView } from "react-native";
+import { Image, Linking, ScrollView } from "react-native";
 
 export default function General() {
     useProxy(settings);
@@ -22,6 +23,7 @@ export default function General() {
     return (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 38 }}>
             <Stack style={{ paddingVertical: 24, paddingHorizontal: 12 }} spacing={24}>
+                <Image source={{ uri: Banner }} style={{ width: "100%", aspectRatio: 900 / 457, borderRadius: 16 }} resizeMode="cover" />
                 <TableRowGroup title={Strings.INFO}>
                     <TableRow
                         label={Strings.BUNNY}
